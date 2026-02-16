@@ -1,0 +1,33 @@
+bibentry(
+  bibtype  = "Manual",
+  title    = "shinyoats: Oat UI Components for Shiny",
+  author   = person("Pawan Rama", "Mali",
+                    email = "prm@outlook.in",
+                    comment = c(ORCID = "0000-0001-7864-5819")),
+  year     = "2026",
+  note     = "R package version 0.1.0",
+  url      = "https://github.com/pawanramamali/shinyoats",
+
+  textVersion = paste(
+    "Mali, P.R. (2026).",
+    "shinyoats: Oat UI Components for Shiny.",
+    "R package version 0.1.0.",
+    "https://github.com/pawanramamali/shinyoats"
+  )
+)
+
+bibentry(
+  bibtype  = "Misc",
+  title    = "Oat UI: Ultra-lightweight, zero dependency, semantic HTML/CSS/JS UI library",
+  author   = person("Kailash", "Nadh"),
+  year     = "2026",
+  note     = "Bundled in shinyoats package",
+  url      = "https://github.com/knadh/oat",
+
+  textVersion = paste(
+    "Nadh, K. (2026).",
+    "Oat UI: Ultra-lightweight, zero dependency, semantic HTML/CSS/JS UI library.",
+    "https://github.com/knadh/oat.",
+    "Bundled in shinyoats package."
+  )
+)

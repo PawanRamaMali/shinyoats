@@ -31,45 +31,46 @@ ui <- fluidPage(
 
     # Stats Cards
     h2("Overview"),
-    row(
-      col(3,
+    hstack(
+      gap = 3,
+      div(style = "flex: 1;",
         card(
           div(
             style = "font-size: 2.5rem; font-weight: bold; color: var(--primary);",
             textOutput("users_count", inline = TRUE)
           ),
-          p(class = "text-light", "Total Users"),
-          footer = span(class = "text-light", "↑ 12% from last month")
+          p("Total Users", style = "color: var(--muted-foreground); margin-top: 0.25rem;"),
+          footer = span("↑ 12% from last month", style = "color: var(--success); font-size: 0.85rem;")
         )
       ),
-      col(3,
+      div(style = "flex: 1;",
         card(
           div(
             style = "font-size: 2.5rem; font-weight: bold; color: var(--primary);",
             textOutput("revenue_count", inline = TRUE)
           ),
-          p(class = "text-light", "Revenue"),
-          footer = span(class = "text-light", "↑ 8% from last month")
+          p("Revenue", style = "color: var(--muted-foreground); margin-top: 0.25rem;"),
+          footer = span("↑ 8% from last month", style = "color: var(--success); font-size: 0.85rem;")
         )
       ),
-      col(3,
+      div(style = "flex: 1;",
         card(
           div(
             style = "font-size: 2.5rem; font-weight: bold; color: var(--primary);",
             textOutput("orders_count", inline = TRUE)
           ),
-          p(class = "text-light", "Orders"),
-          footer = span(class = "text-light", "↓ 3% from last month")
+          p("Orders", style = "color: var(--muted-foreground); margin-top: 0.25rem;"),
+          footer = span("↓ 3% from last month", style = "color: var(--danger); font-size: 0.85rem;")
         )
       ),
-      col(3,
+      div(style = "flex: 1;",
         card(
           div(
             style = "font-size: 2.5rem; font-weight: bold; color: var(--primary);",
             textOutput("growth_count", inline = TRUE)
           ),
-          p(class = "text-light", "Growth"),
-          footer = span(class = "text-light", "↑ 15% from last month")
+          p("Growth", style = "color: var(--muted-foreground); margin-top: 0.25rem;"),
+          footer = span("↑ 15% from last month", style = "color: var(--success); font-size: 0.85rem;")
         )
       )
     ),
@@ -98,8 +99,9 @@ ui <- fluidPage(
         class = "vstack gap-4",
         card(
           title = "Dashboard Settings",
-          row(
-            col(6,
+          hstack(
+            gap = 4,
+            div(style = "flex: 1;",
               textInput("app_name", "Application Name", value = "My Dashboard"),
               selectInput("refresh_rate", "Refresh Rate",
                          choices = c("5 seconds" = "5",
@@ -107,7 +109,7 @@ ui <- fluidPage(
                                    "30 seconds" = "30")),
               checkboxInput("notifications", "Enable notifications", value = TRUE)
             ),
-            col(6,
+            div(style = "flex: 1;",
               checkboxInput("auto_refresh", "Auto-refresh data", value = TRUE),
               checkboxInput("show_tooltips", "Show tooltips", value = TRUE),
               checkboxInput("compact_view", "Compact view")

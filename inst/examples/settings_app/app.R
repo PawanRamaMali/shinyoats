@@ -27,13 +27,14 @@ ui <- fluidPage(
       # Profile
       card(
         title = "Profile Settings",
-        row(
-          col(6,
+        hstack(
+          gap = 4,
+          div(style = "flex: 1;",
             textInput("profile_name", "Full Name", value = "John Doe"),
             textInput("profile_email", "Email", value = "john@example.com"),
             textInput("profile_company", "Company", value = "Acme Inc")
           ),
-          col(6,
+          div(style = "flex: 1;",
             textInput("profile_job", "Job Title", value = "Software Engineer"),
             textInput("profile_phone", "Phone", value = "+1 234 567 8900"),
             selectInput("profile_timezone", "Timezone", choices = c("UTC", "EST", "PST", "GMT"))

@@ -40,6 +40,19 @@
       }
     });
 
+    // Custom message handler: Update progress bar
+    Shiny.addCustomMessageHandler('shinyoats:updateProgress', function(message) {
+      var container = document.getElementById(message.id);
+      if (!container) return;
+      var bar = container.querySelector('.progress-bar');
+      if (!bar) return;
+      var max = parseFloat(bar.getAttribute('aria-valuemax')) || 100;
+      var percent = (message.value / max) * 100;
+      bar.style.width = percent + '%';
+      bar.setAttribute('aria-valuenow', message.value);
+      bar.textContent = Math.round(percent) + '%';
+    });
+
     // Custom message handler: Show toast
     Shiny.addCustomMessageHandler('shinyoats:toast', function(message) {
       if (window.ot && window.ot.toast) {

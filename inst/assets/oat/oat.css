@@ -1259,6 +1259,9 @@
       padding-block-start: 0;
     }
   }
+
+  dialog.modal-sm { max-width: 20rem; }
+  dialog.modal-lg { max-width: 48rem; }
 }
 @layer components {
   ot-dropdown {

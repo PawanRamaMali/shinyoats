@@ -24,19 +24,11 @@ ui <- fluidPage(
 
     # Cards
     h2("Cards"),
-    row(
-      col(4, card(
-        title = "Simple",
-        p("Card with title")
-      )),
-      col(4, card(
-        title = "With Footer",
-        p("Card content"),
-        footer = btn("Action", size = "sm")
-      )),
-      col(4, card(
-        p("No title needed")
-      ))
+    hstack(
+      gap = 3,
+      div(style = "flex: 1;", card(title = "Simple", p("Card with title"))),
+      div(style = "flex: 1;", card(title = "With Footer", p("Card content"), footer = btn("Action", size = "sm"))),
+      div(style = "flex: 1;", card(p("No title needed")))
     ),
     hr(),
 
@@ -63,17 +55,16 @@ ui <- fluidPage(
 
     # Forms
     h2("Forms"),
-    row(
-      col(6,
+    hstack(
+      gap = 4,
+      div(style = "flex: 1;",
         textInput("name", "Name"),
-        selectInput("category", "Category",
-                   choices = c("A", "B", "C")),
+        selectInput("category", "Category", choices = c("A", "B", "C")),
         checkboxInput("agree", "I agree")
       ),
-      col(6,
+      div(style = "flex: 1;",
         textAreaInput("message", "Message", rows = 3),
-        radioButtons("priority", "Priority",
-                    choices = c("Low", "Medium", "High"))
+        radioButtons("priority", "Priority", choices = c("Low", "Medium", "High"))
       )
     ),
     verbatimTextOutput("form_output"),

@@ -12,10 +12,11 @@ Authors@R: c(
            comment = "Oat UI library author")
     )
 Description: Provides Shiny bindings for the Oat UI component library
-    (<https://github.com/knadh/oat>), an ultra-lightweight (~8KB), zero-dependency,
+    (<https://github.com/knadh/oat>), a lightweight, zero-dependency,
     semantic HTML/CSS/JS UI framework. Enables building modern Shiny applications
     with Oat's clean design system including buttons, cards, forms, grids, tabs,
-    modals, toasts, and more.
+    modals, toasts, and more. Offers 55 ready-to-use components as clean R
+    wrapper functions requiring no knowledge of CSS classes or HTML.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -26,12 +27,9 @@ Imports:
     htmltools (>= 0.5.0),
     jsonlite
 Suggests:
-    knitr,
-    rmarkdown,
     testthat (>= 3.0.0),
     R6
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/pawanramamali/shinyoats
 BugReports: https://github.com/pawanramamali/shinyoats/issues
-VignetteBuilder: knitr

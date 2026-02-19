@@ -118,7 +118,7 @@ ui <- fluidPage(
           footer = div(
             class = "hstack gap-2 justify-end",
             btn("Reset", variant = "secondary", outline = TRUE),
-            btn("Save Changes", id = "save_btn")
+            action_btn("save_btn", "Save Changes")
           )
         ),
 

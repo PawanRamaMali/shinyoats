@@ -127,7 +127,7 @@ ui <- fluidPage(
 
     # Modal
     h2("Modal"),
-    btn("Open Modal", id = "open_modal"),
+    action_btn("open_modal", "Open Modal"),
     tags$dialog(
       id = "demo_modal",
       h3("Modal Title"),

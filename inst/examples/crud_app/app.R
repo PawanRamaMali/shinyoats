@@ -32,9 +32,15 @@ ui <- fluidPage(
         tags$input(
           id = "search", type = "text",
           placeholder = "Search users...",
-          style = "padding: 0.4rem 0.75rem; border: 1px solid var(--border);
-                   border-radius: var(--radius); background: var(--background);
-                   color: var(--foreground); font-size: 0.9rem;"
+          oninput = "Shiny.setInputValue('search', this.value)",
+          style = paste(
+            "padding: 0.4rem 0.75rem;",
+            "border: 1px solid var(--border);",
+            "border-radius: var(--radius);",
+            "background: var(--background);",
+            "color: var(--foreground);",
+            "font-size: 0.9rem;"
+          )
         ),
         action_btn("add_user_btn", "+ Add User")
       )
@@ -129,13 +135,11 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   users_data <- reactiveVal(initial_data)
 
-  # Stats
-  output$total_users   <- renderText({ nrow(users_data()) })
-  output$active_users  <- renderText({ sum(users_data()$status == "Active") })
+  output$total_users    <- renderText({ nrow(users_data()) })
+  output$active_users   <- renderText({ sum(users_data()$status == "Active") })
   output$inactive_users <- renderText({ sum(users_data()$status == "Inactive") })
-  output$admins        <- renderText({ sum(users_data()$role == "Admin") })
+  output$admins         <- renderText({ sum(users_data()$role == "Admin") })
 
-  # Users table with badges
   output$users_table <- renderUI({
     data <- users_data()
 
@@ -151,11 +155,11 @@ server <- function(input, output, session) {
                style = "color: var(--muted-foreground); padding: 1rem 0;"))
     }
 
-    th_style <- paste0(
+    th_style <- paste(
       "text-align: left; padding: 0.6rem 0.75rem;",
       "border-bottom: 2px solid var(--border); font-weight: 600;",
-      "font-size: 0.85rem; color: var(--muted-foreground); text-transform: uppercase;",
-      "letter-spacing: 0.05em;"
+      "font-size: 0.8rem; color: var(--muted-foreground);",
+      "text-transform: uppercase; letter-spacing: 0.05em;"
     )
     td_style <- "padding: 0.75rem; border-bottom: 1px solid var(--border);"
 
@@ -186,14 +190,12 @@ server <- function(input, output, session) {
     )
   })
 
-  # Open add user modal
   observeEvent(input$add_user_btn, {
     oats_show_modal(session, "user_modal")
   })
 
-  # Save new user
   observeEvent(input$save_user, {
-    if (!nzchar(input$modal_name) || !nzchar(input$modal_email)) {
+    if (!nzchar(trimws(input$modal_name)) || !nzchar(trimws(input$modal_email))) {
       oats_show_toast(session, "Please fill in all required fields", variant = "warning")
       return()
     }
@@ -215,17 +217,17 @@ server <- function(input, output, session) {
     updateTextInput(session, "modal_email", value = "")
   })
 
+  observeEvent(input$confirm_delete, {
+    oats_hide_modal(session, "delete_modal")
+    oats_show_toast(session, "User deleted", variant = "success")
+  })
+
   observeEvent(input$refresh_btn, {
     oats_show_toast(session, "Data refreshed", variant = "info")
   })
 
   observeEvent(input$export_csv, {
     oats_show_toast(session, "Exporting to CSV...", variant = "info")
-  })
-
-  observeEvent(input$confirm_delete, {
-    oats_hide_modal(session, "delete_modal")
-    oats_show_toast(session, "User deleted", variant = "success")
   })
 }
 

@@ -1020,7 +1020,7 @@
   }
 }
 @layer components {
-  .badge {
+  .ot-badge {
     --bg-amount: 12%;
 
     display: inline-flex;
@@ -1172,6 +1172,9 @@
   }
 }
 @layer components {
+  /* Reset Bootstrap interference — dialogs must use native show/hide */
+  dialog.ot-modal { display: revert !important; }
+
   dialog {
     position: fixed;
     inset: 0;
@@ -1260,8 +1263,8 @@
     }
   }
 
-  dialog.modal-sm { max-width: 20rem; }
-  dialog.modal-lg { max-width: 48rem; }
+  dialog.ot-modal-sm { max-width: 20rem; }
+  dialog.ot-modal-lg { max-width: 48rem; }
 }
 @layer components {
   ot-dropdown {

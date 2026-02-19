@@ -23,7 +23,7 @@ Wraps a form control with an optional label and help text.
 form_group(
   label = "Username",
   help = "Must be at least 3 characters.",
-  textInput("user", NULL)
+  shiny::textInput("user", NULL)
 )
 
 }

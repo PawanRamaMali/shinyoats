@@ -9,7 +9,8 @@ ui <- fluidPage(
     nav_item("Dashboard", href = "#"),
     nav_item("Settings", href = "#", active = TRUE),
     spacer(),
-    dropdown("Account", variant = "secondary", dropdown_item("Profile"), dropdown_item("Logout"))
+    dropdown("Account", variant = "secondary",
+             dropdown_item("Profile"), dropdown_item("Logout"))
   ),
 
   container(
@@ -37,26 +38,29 @@ ui <- fluidPage(
           div(style = "flex: 1;",
             textInput("profile_job", "Job Title", value = "Software Engineer"),
             textInput("profile_phone", "Phone", value = "+1 234 567 8900"),
-            selectInput("profile_timezone", "Timezone", choices = c("UTC", "EST", "PST", "GMT"))
+            selectInput("profile_timezone", "Timezone",
+                        choices = c("UTC", "EST", "PST", "GMT"))
           )
         ),
-        textAreaInput("profile_bio", "Bio", rows = 3, value = "Passionate about building great software..."),
+        textAreaInput("profile_bio", "Bio", rows = 3,
+                      value = "Passionate about building great software..."),
         footer = hstack(
           gap = 2,
           btn("Cancel", variant = "secondary", outline = TRUE),
-          btn("Save Changes", id = "save_profile", variant = "primary")
+          action_btn("save_profile", "Save Changes")
         )
       ),
 
       # Account
       card(
         title = "Account Security",
-        alert("Two-factor authentication is enabled for your account", variant = "success"),
+        alert("Two-factor authentication is enabled for your account",
+              variant = "success"),
         h4("Change Password"),
         shiny::passwordInput("current_password", "Current Password"),
         shiny::passwordInput("new_password", "New Password"),
         shiny::passwordInput("confirm_password", "Confirm New Password"),
-        footer = btn("Update Password", id = "update_password")
+        footer = action_btn("update_password", "Update Password")
       ),
 
       # Notifications
@@ -77,7 +81,7 @@ ui <- fluidPage(
           switch_input("notif_push_comments", "Comments on your posts", TRUE),
           switch_input("notif_push_mentions", "Mentions", TRUE)
         ),
-        footer = btn("Save Preferences", id = "save_notifications")
+        footer = action_btn("save_notifications", "Save Preferences")
       ),
 
       # Privacy
@@ -85,8 +89,8 @@ ui <- fluidPage(
         title = "Privacy Settings",
         h4("Profile Visibility"),
         radioButtons("privacy_profile", NULL,
-                    choices = c("Public", "Friends Only", "Private"),
-                    selected = "Public"),
+                     choices = c("Public", "Friends Only", "Private"),
+                     selected = "Public"),
         divider(),
         h4("Data Collection"),
         vstack(
@@ -98,7 +102,7 @@ ui <- fluidPage(
         footer = hstack(
           gap = 2,
           btn("Download My Data", variant = "secondary", outline = TRUE),
-          btn("Save Settings", id = "save_privacy")
+          action_btn("save_privacy", "Save Settings")
         )
       ),
 
@@ -107,20 +111,21 @@ ui <- fluidPage(
         title = "Appearance",
         h4("Theme"),
         radioButtons("theme_mode", NULL,
-                    choices = c("Light", "Dark", "Auto"),
-                    selected = "Light"),
+                     choices = c("Light", "Dark", "Auto"),
+                     selected = "Light"),
         divider(),
         h4("Display"),
-        selectInput("language", "Language", choices = c("English", "Spanish", "French", "German")),
-        selectInput("date_format", "Date Format", choices = c("MM/DD/YYYY", "DD/MM/YYYY", "YYYY-MM-DD")),
-        footer = btn("Apply Changes", id = "save_appearance")
+        selectInput("language", "Language",
+                    choices = c("English", "Spanish", "French", "German")),
+        selectInput("date_format", "Date Format",
+                    choices = c("MM/DD/YYYY", "DD/MM/YYYY", "YYYY-MM-DD")),
+        footer = action_btn("save_appearance", "Apply Changes")
       )
     )
   )
 )
 
 server <- function(input, output, session) {
-  # Save handlers
   observeEvent(input$save_profile, {
     oats_show_toast(session, "Profile updated successfully!", variant = "success")
   })

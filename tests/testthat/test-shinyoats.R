@@ -111,7 +111,7 @@ test_that("alert() returns correct tag with variant", {
 test_that("badge() returns a span with correct class", {
   b <- badge("New")
   expect_equal(b$name, "span")
-  expect_equal(b$attribs$class, "badge")
+  expect_equal(b$attribs$class, "ot-badge")
 
   b2 <- badge("Beta", variant = "secondary")
   expect_true(grepl("secondary", b2$attribs$class))

@@ -9,6 +9,7 @@
 
 #' @importFrom htmltools htmlDependency tagList tags HTML tag
 #' @importFrom jsonlite toJSON
+#' @importFrom stats runif
 NULL
 
 # Core Setup ------------------------------------------------------------------
@@ -352,7 +353,7 @@ alert <- function(..., variant = c("info", "success", "warning", "danger"),
 badge <- function(label, variant = c("primary", "secondary", "success", "warning", "danger"),
                   id = NULL) {
   variant <- match.arg(variant)
-  classes <- if (variant == "primary") "badge" else paste("badge", variant)
+  classes <- if (variant == "primary") "ot-badge" else paste("ot-badge", variant)
   tags$span(id = id, class = classes, label)
 }
 
@@ -377,48 +378,6 @@ badge <- function(label, variant = c("primary", "secondary", "success", "warning
 container <- function(..., fluid = FALSE, id = NULL) {
   class_name <- if (fluid) "container-fluid" else "container"
   tags$div(id = id, class = class_name, ...)
-}
-
-#' Grid Row
-#'
-#' A horizontal row that groups [col()] columns.
-#'
-#' @param ... [col()] elements or other content.
-#' @param id Optional element ID.
-#'
-#' @return A Shiny tag object (`<div class="row">`).
-#'
-#' @examples
-#' row(
-#'   col(6, p("Left")),
-#'   col(6, p("Right"))
-#' )
-#'
-#' @export
-row <- function(..., id = NULL) {
-  tags$div(id = id, class = "row", ...)
-}
-
-#' Grid Column
-#'
-#' A column inside a [row()]. Width is specified in twelfths (1–12).
-#'
-#' @param width Integer. Column span out of 12. Default `12`.
-#' @param ... Content elements.
-#' @param id Optional element ID.
-#'
-#' @return A Shiny tag object (`<div class="col-{width}">`).
-#'
-#' @examples
-#' row(
-#'   col(4, card(title = "A")),
-#'   col(4, card(title = "B")),
-#'   col(4, card(title = "C"))
-#' )
-#'
-#' @export
-col <- function(width = 12, ..., id = NULL) {
-  tags$div(id = id, class = paste0("col-", width), ...)
 }
 
 #' Horizontal Stack
@@ -518,13 +477,26 @@ divider <- function() {
 #' @export
 navbar <- function(..., brand = NULL, brand_url = "#", id = NULL) {
   brand_elem <- if (!is.null(brand)) {
-    tags$a(href = brand_url, class = "navbar-brand", brand)
+    tags$a(
+      href = brand_url,
+      style = paste(
+        "font-weight: 700; font-size: 1.1rem;",
+        "color: var(--foreground); text-decoration: none;",
+        "letter-spacing: -0.02em;"
+      ),
+      brand
+    )
   }
 
   tags$nav(
     id = id,
-    class = "hstack justify-between p-4",
-    style = "background: var(--card); border-bottom: 1px solid var(--border);",
+    class = "hstack justify-between",
+    style = paste(
+      "background: var(--card);",
+      "border-bottom: 1px solid var(--border);",
+      "padding: 0.75rem 1.5rem;",
+      "position: sticky; top: 0; z-index: 100;"
+    ),
     brand_elem,
     hstack(gap = 2, ...)
   )
@@ -548,8 +520,18 @@ navbar <- function(..., brand = NULL, brand_url = "#", id = NULL) {
 #'
 #' @export
 nav_item <- function(label, href = "#", active = FALSE) {
-  classes <- if (active) "nav-link active" else "nav-link"
-  tags$a(href = href, class = classes, label)
+  style <- paste(
+    "padding: 0.4rem 0.75rem;",
+    "border-radius: var(--radius);",
+    "text-decoration: none;",
+    "font-size: 0.9rem;",
+    if (active) {
+      "color: var(--foreground); background: var(--secondary); font-weight: 500;"
+    } else {
+      "color: var(--muted-foreground);"
+    }
+  )
+  tags$a(href = href, style = style, label)
 }
 
 #' Sidebar
@@ -731,7 +713,7 @@ list_item <- function(..., active = FALSE, id = NULL) {
 #' form_group(
 #'   label = "Username",
 #'   help = "Must be at least 3 characters.",
-#'   textInput("user", NULL)
+#'   shiny::textInput("user", NULL)
 #' )
 #'
 #' @export
@@ -1072,12 +1054,13 @@ modal <- function(..., id, title = NULL, size = c("md", "sm", "lg"), footer = NU
   content <- list(...)
   if (!is.null(title)) content <- c(list(tags$header(h3(title))), content)
   if (!is.null(footer)) {
-    content <- c(content, list(tags$footer(class = "modal-footer", footer)))
+    content <- c(content, list(tags$footer(class = "ot-modal-footer", footer)))
   }
 
+  # Use "ot-modal" prefix to avoid collision with Bootstrap's .modal/.modal-lg/.modal-sm
   tags$dialog(
     id = id,
-    class = paste("modal", paste0("modal-", size)),
+    class = if (size == "md") "ot-modal" else paste0("ot-modal ot-modal-", size),
     content
   )
 }
